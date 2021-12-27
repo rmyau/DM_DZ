@@ -176,7 +176,7 @@ namespace DZ_2
                     Print(word2, file2);
                 }
             }
-                
+
             file1.Close();
             file2.Close();
             //Console.ReadKey();
