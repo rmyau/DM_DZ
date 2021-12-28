@@ -71,7 +71,7 @@ namespace DZ_4
                     NextRearrangement(ReArr);
         }
         
-        public static void Connect(List<int> sochet, List<string> word, int j, int m, int k)
+        public static void Connect(List<int> sochet, List<string> word, int j, int m)
         {
             int Index = 0;
             for (int i = 0; i < m; i++)
@@ -189,8 +189,8 @@ namespace DZ_4
                                 NextArrange(arrange1, perest1, 2);
                                 for (int i = 0; i < m1; i++)
                                     word1[i] = "";
-                                Connect(sochet, word1, j, m1, k1);
-                                Connect(sochet1, word1, n, m1, k2);
+                                Connect(sochet, word1, j, m1);
+                                Connect(sochet1, word1, n, m1);
                                 ConnectArr(arrange1, word1, m1);
                                 Print(word1, file1, m1);
                                 while (hasNextRearrangement(perest1))
@@ -198,8 +198,8 @@ namespace DZ_4
                                     NextArrange(arrange1, perest1, 2);
                                     for (int i = 0; i < m1; i++)
                                         word1[i] = "";
-                                    Connect(sochet, word1, j, m1, k1);
-                                    Connect(sochet1, word1, n, m1, k2);
+                                    Connect(sochet, word1, j, m1);
+                                    Connect(sochet1, word1, n, m1);
                                     ConnectArr(arrange1, word1, m1);
                                     Print(word1, file1, m1);
                                 }
@@ -242,9 +242,9 @@ namespace DZ_4
                                         NextArrange(arrange2, perest2, 1);
                                         for (int i = 0; i < m2; i++)
                                             word2[i] = "";
-                                        Connect(sochet2, word2, j, m2, k1);
-                                        Connect(sochet21, word2, n, m2, k1);
-                                        Connect(sochet22, word2, p, m2, k2);
+                                        Connect(sochet2, word2, j, m2);
+                                        Connect(sochet21, word2, n, m2);
+                                        Connect(sochet22, word2, p, m2);
                                         ConnectArr(arrange2, word2, m2);
                                         Print(word2, file2, m2);
                                         while (hasNextRearrangement(perest2))
@@ -254,9 +254,9 @@ namespace DZ_4
                                             
                                             for (int i = 0; i < m2; i++)
                                                 word2[i] = "";
-                                            Connect(sochet2, word2, j, m2, k1);
-                                            Connect(sochet21, word2, n, m2, k1);
-                                            Connect(sochet22, word2, p, m2, k2);
+                                            Connect(sochet2, word2, j, m2);
+                                            Connect(sochet21, word2, n, m2);
+                                            Connect(sochet22, word2, p, m2);
                                             ConnectArr(arrange2, word2, m2);
                                             Print(word2, file2, m2);
                                         }
