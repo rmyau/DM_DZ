@@ -120,7 +120,7 @@ namespace DZ_5
             for (int i = 0; i < m2; i++)
                 word2.Add("");
             file1.WriteLine("Все слова длины 4, в которых больше двух букв а:");
-            file2.WriteLine("Все слова длины 7, в которых больше двух буквв а:");
+            file2.WriteLine("Все слова длины 7, в которых больше двух букв а:");
             while (k1 <= 7)
             {
                 if (k1 <= 4)
@@ -185,15 +185,11 @@ namespace DZ_5
                     arrange1.RemoveAt(arrange1.Count-1);
                 if (arrange2.Count!=0)
                     arrange2.RemoveAt(arrange2.Count - 1);
-
                 k1++;
-                Console.WriteLine(k1);
-                
-                if (k1 == 4) Console.WriteLine("END");
             }
             file1.Close();
             file2.Close();
-            Console.ReadKey();
+            //Console.ReadKey();
         }
     }
 }
