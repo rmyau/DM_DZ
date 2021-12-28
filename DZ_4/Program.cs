@@ -63,51 +63,33 @@ namespace DZ_4
 
         public static void NextArrange(List<string> arr, List<string> ReArr, int L)// L - разница между длиной перестановки и длиной и размещения
         {
-            NextRearrangement(ReArr);
+            
             for (int i = 0; i < arr.Count; i++)
                 arr[i] = ReArr[i];
             for (int i = 0; i < L; i++)
                 if (hasNextRearrangement(ReArr))
                     NextRearrangement(ReArr);
         }
-        public static void Connect(List<int> sochet, List<string> arrange, List<string> word, int indAlf, int m,int k)
+        
+        public static void Connect(List<int> sochet, List<string> word, int j, int m, int k)
         {
-            int indexAr = 0;
-            for (int i = 0; i < m; i++)//обновили слово
-                word[i] = "";
-
-            for (int i = 0; i < k; i++)
-                word[sochet[i]] = alf[indAlf];
+            int Index = 0;
+            for (int i = 0; i < m; i++)
+                if (word[i] == "")
+                {
+                    if (sochet.IndexOf(Index) != -1)
+                        word[i] = alf[j];
+                    Index++;
+                }
+        }
+        public static void ConnectArr(List<string> arrange, List<string> word, int m)
+        { int indexAr = 0;
             for (int i = 0; i < m; i++)
                 if (word[i] == "")
                 {
                     word[i] = arrange[indexAr];
                     indexAr++;
                 }
-        }
-        public static void ConnectForTwo(List<int> MainSochet, List<int> sochet2, List<string> arrange2, List<string> word, int m, int j, int n, int k)
-        {
-            int indexAr = 0;
-            for (int i = 0; i < m; i++)//обновили слово
-                word[i] = "";
-
-            for (int i = 0; i < k; i++)
-                word[MainSochet[i]] = alf[j];
-
-            int indexHelp = 0;//номер пустой позиции в слове
-            for (int i = 0; i < m; i++)
-                if (word[i] == "")
-                {
-                    if (sochet2.IndexOf(indexHelp) != -1)
-                        word[i] = alf[n];
-                    else
-                    {
-                        word[i] = arrange2[indexAr];
-                        indexAr++;
-                    }
-                    indexHelp++;
-                }
-                
         }
 
         public static void Print(List<string> slovo, StreamWriter file, int m)
@@ -123,8 +105,8 @@ namespace DZ_4
         public static List<string> IterAlf2 = new List<string>(); // для двух повторящихся букв
         public static List<string> word1 = new List<string>();
         public static List<string> word2 = new List<string>();
-        public static StreamWriter file1 = new StreamWriter(@"Dz3_1.txt");//для размещений с повторениями
-        public static StreamWriter file2 = new StreamWriter(@"Dz3_2.txt");
+        public static StreamWriter file1 = new StreamWriter(@"Dz4_1.txt");//для размещений с повторениями
+        public static StreamWriter file2 = new StreamWriter(@"Dz4_2.txt");
         static void Main(string[] args)
         {
             alf.Add("a");
@@ -137,92 +119,152 @@ namespace DZ_4
             List<string> arrange1 = new List<string>();
             List<string> arrange2 = new List<string>();
             List<string> perest1 = new List<string>();
-            //List<string> perest2 = new List<string>();
+            List<string> perest2 = new List<string>();
             List<int> sochet = new List<int>();
+            List<int> sochet1 = new List<int>();
+
             List<int> sochet2 = new List<int>();
+            List<int> sochet21 = new List<int>();
+            List<int> sochet22 = new List<int>();
 
             for (int i = 0; i < m1 - k1-k2; i++)
             {
                 arrange1.Add("");
             }
             for (int i = 0; i < k1; i++)
+            {
                 sochet.Add(0);
-            for (int i = 0; i < k2; i++)
                 sochet2.Add(0);
+                sochet21.Add(0);
+                arrange2.Add("");
+            }
+            for (int i = 0; i < k2; i++)
+            {
+                sochet1.Add(0);
+                sochet22.Add(0);
+            }
 
             for (int i = 0; i < m1; i++)
-            {
                 word1.Add("");
-               
-            }
-            //word2.Add("");//тк длина второго слова = 6
+            for (int i = 0; i < m2; i++)
+                word2.Add("");
+            
             for (int i = 0; i < 4; i++)
-            {
                 perest1.Add("");
-            }
+            for (int i = 0; i < 3; i++)
+                perest2.Add("");
 
             file1.WriteLine("Все слова длины 7,в которых ровно одна буква повторяется 2 раза, ровно одна буква повторяется 3 раза:");
             file2.WriteLine("Все слова длины 9,в которых ровно две буквы повторяются 2 раза, ровно одна буква повторяется 3 раза:");
             for (int j = 0; j < 6; j++)
             {
                 for (int i = 0; i < k1; i++)//обновили сочетания для новой буквы
-                    sochet[i] = i;
-                sochet2[k1 - 1] = k1 - 2;
+                {
+                    sochet[i] = 0;
+                    sochet2[i] = 0;
+                }
+                
                 IterAlf1 = new List<string>();
-                for (int i = 0; i < 6; i++)
-                    if (i != j)
-                        IterAlf1.Add(alf[i]);//убрали букву из алфавита
+                while (hasNextSochet(sochet, m1))
+                {
+                    NextSochet(sochet, m1,k1);
 
-                //while (hasNextSochet(sochet, m1))
-                //{
-                //    NextSochet(sochet, m1);
-
-                //    for (int i = 0; i < m1; i++)
-                //        perest[i] = IterAlf1[i];
-                //    NextArrange(arrange1, perest, 1);
-                //    Connect(sochet, arrange1, word1, j, m1);
-                //    Print(word1, file1, m1);
-                //    while (hasNextRearrangement(perest))
-                //    {
-                //        NextArrange(arrange1, perest, 1);
-                //        Connect(sochet, arrange1, word1, j, m1);
-                //        Print(word1, file1, m1);
-                //    }
-
-                //начало второго пункта
-
-                for (int n = 0; n < 6; n++)
-                    if (n != j)
-                    {
-                        for (int i = 0; i < k2; i++)//обновили сочетания для новой буквы
-                            sochet2[i] = i;
-                        sochet2[k2 - 1] = k2 - 2;
-                        IterAlf2 = new List<string>();
-                        for (int i = 0; i < 6; i++)
-                            if (i != j && i != n)
-                                IterAlf2.Add(alf[i]);//убрали букву из алфавита 2
-
-                        while (hasNextSochet(sochet2, 5))
+                    for (int n = 0; n < 6; n++)
+                        if (n != j)
                         {
-                            NextSochet(sochet2, 5, k2);
+                            for (int i = 0; i < k2; i++)//обновили сочетания для новой буквы
+                                sochet1[i] = i;
+                            sochet1[k2 - 1] = k2 - 2;
+                            for (int i = 0; i < 6; i++)
+                                if (i != j && i != n)
+                                    IterAlf1.Add(alf[i]);//убрали букву из алфавита 2
 
-                            for (int i = 0; i < 4; i++)
-                                perest1[i] = IterAlf2[i];
-
-                            NextArrange(arrange1, perest1, 1);
-
-                            ConnectForTwo(sochet, sochet2, arrange1, word1, m1, j, n, k1);
-                            Print(word1, file1, m1);
-                            while (hasNextRearrangement(perest1))
+                            while (hasNextSochet(sochet1, 5))
                             {
-                                NextArrange(arrange1, perest1, 1);
-                                ConnectForTwo(sochet, sochet2, arrange1, word1, m1, j, n, k1);
-                                Print(word1, file1, m1);
-                            }
+                                NextSochet(sochet1, 5, k2);
 
+                                for (int i = 0; i < 4; i++)
+                                    perest1[i] = IterAlf1[i];
+
+                                NextArrange(arrange1, perest1, 2);
+                                for (int i = 0; i < m1; i++)
+                                    word1[i] = "";
+                                Connect(sochet, word1, j, m1, k1);
+                                Connect(sochet1, word1, n, m1, k2);
+                                ConnectArr(arrange1, word1, m1);
+                                Print(word1, file1, m1);
+                                while (hasNextRearrangement(perest1))
+                                {
+                                    NextArrange(arrange1, perest1, 2);
+                                    for (int i = 0; i < m1; i++)
+                                        word1[i] = "";
+                                    Connect(sochet, word1, j, m1, k1);
+                                    Connect(sochet1, word1, n, m1, k2);
+                                    ConnectArr(arrange1, word1, m1);
+                                    Print(word1, file1, m1);
+                                }
+
+                            }
+                        }      
+                }
+
+                //второй пункт
+                while (hasNextSochet(sochet2, m2))
+                {
+                    NextSochet(sochet2, m2,k1);
+
+                    for (int n = j + 1; n < 6; n++)
+                    {
+                        for (int i = 0; i < k1; i++)//обновили сочетания для новой буквы
+                            sochet21[i] = 0;
+                        while (hasNextSochet(sochet21, 7))
+                        {
+                            NextSochet(sochet21, 7, k1);
+
+                            for (int p = 0; p < 6; p++)
+                                if (p != j && p != n)
+                                {
+                                    for (int i = 0; i < k2; i++)//обновили сочетания для новой буквы
+                                        sochet22[i] = i;
+                                    sochet22[k2 - 1] = k2 - 2;
+
+                                    IterAlf2 = new List<string>();
+                                    for (int i = 0; i < 6; i++)
+                                        if (i != j && i != n && i != p)
+                                            IterAlf2.Add(alf[i]);//убрали буквы из алфавита 
+
+                                    while (hasNextSochet(sochet22, 5))
+                                    {
+                                        NextSochet(sochet22, 5,k2);
+                                        for (int i = 0; i < 3; i++)
+                                            perest2[i] = IterAlf2[i];
+                                        
+                                        NextArrange(arrange2, perest2, 1);
+                                        for (int i = 0; i < m2; i++)
+                                            word2[i] = "";
+                                        Connect(sochet2, word2, j, m2, k1);
+                                        Connect(sochet21, word2, n, m2, k1);
+                                        Connect(sochet22, word2, p, m2, k2);
+                                        ConnectArr(arrange2, word2, m2);
+                                        Print(word2, file2, m2);
+                                        while (hasNextRearrangement(perest2))
+                                        {
+                                           
+                                            NextArrange(arrange2, perest2,1);
+                                            
+                                            for (int i = 0; i < m2; i++)
+                                                word2[i] = "";
+                                            Connect(sochet2, word2, j, m2, k1);
+                                            Connect(sochet21, word2, n, m2, k1);
+                                            Connect(sochet22, word2, p, m2, k2);
+                                            ConnectArr(arrange2, word2, m2);
+                                            Print(word2, file2, m2);
+                                        }
+                                    }
+                                }
                         }
                     }
-
+                }
             }
 
             file1.Close();
