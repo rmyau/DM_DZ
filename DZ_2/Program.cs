@@ -149,6 +149,7 @@ namespace DZ_2
             }
             file1.WriteLine("Все слова длины 5, в которых две буквы а:");
             file2.WriteLine("Все слова длины 5, в которых две буквы а, остальные буквы не повторяются:");
+            
             while (hasNextSochet(sochet))
             {
                 NextSochet(sochet);
