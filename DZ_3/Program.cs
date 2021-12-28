@@ -224,7 +224,7 @@ namespace DZ_3
 
             file1.Close();
             file2.Close();
-            Console.ReadKey();
+            //Console.ReadKey();
         }
     }
 }
