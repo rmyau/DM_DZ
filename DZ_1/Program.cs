@@ -96,14 +96,16 @@ namespace DZ_1
         public static void NextSochetRepeat(List<int> sochet)
         {
             int s = sochet.Count - 2;
-            while (!(s == 0 || sochet[s - 1] > sochet[s]))
+            Console.WriteLine("In nextSoch s = {0}", s);
+            while (!(s == 0 || sochet[s - 1] < sochet[s]))
                 s--;
             sochet[s]++;
+            Console.WriteLine("change sochet[{1}] = {0}", sochet[s],s);
             int sum = 0;
             for (int i = s + 1; i < sochet.Count; i++)
                 sum += sochet[i];
-            for (int i = 0; i < sochet.Count; i++)
-                if (i < sum - 1) sochet[s + i] = 1;
+            for (int i = 1; i < sochet.Count - s; i++)
+                if (i < sum) sochet[s + i] = 1;
                 else sochet[s + i] = 0;
 
 
@@ -123,7 +125,7 @@ namespace DZ_1
             for (int i = 0; i < slovo.Count; i++)
                 s += slovo[i];
             file.WriteLine(s);
-            //Console.WriteLine(s);
+           // Console.WriteLine(s);
 
         }
         public static int Factorial(int x)
@@ -229,8 +231,93 @@ namespace DZ_1
 
 
 
+            sochet = new List<int>();
+            sochWord = new List<string>();
+            arrange = new List<string>();
+            for (int i = 0; i < alfSize; i++)
+                perest[i] = alf[i];
 
-            //Console.ReadKey();
+            for (int j = 0; j < alfSize; j++)
+            {
+                sochet.Add(1);
+                sochWord.Add("");
+                arrange.Add("");
+                for (int i = 0; i < alfSize; i++)
+                    perest[i] = alf[i];
+                NextArrange(arrange, perest, Factorial(alfSize - arrange.Count));
+                for (int i = 0; i < sochet.Count; i++)
+                {
+                    sochet[i] = 1;
+                    sochWord[i] = alf[i];
+                }
+                while (hasNextRearrangement(perest))
+                {
+                    NextArrange(arrange, perest, Factorial(alfSize - arrange.Count));
+                    int ind = 0, simbNum = 1;
+                    if (sochet[0] != sochet.Count)
+                    {
+                        for (int i = 0; i < sochWord.Count; i++)
+                        {
+                            if (simbNum <= sochet[ind])
+                            {
+                                sochWord[i] = arrange[ind];
+                                simbNum++;
+                            }
+                            else
+                            {
+                                simbNum = 1;
+                                ind++;
+                                sochWord[i] = arrange[ind];
+                            }
+                        }
+                        //\Console.WriteLine("first");
+                        Print(sochWord, fileSochetRep);
+                    }
+                }
+                if (sochet[0] != sochet.Count) {
+                    while (HasNextSochetRepeat(sochet))
+                    {
+                        for (int i = 0; i < alfSize; i++)
+                            perest[i] = alf[i];
+                        NextArrange(arrange, perest, Factorial(alfSize - arrange.Count));
+                        NextSochetRepeat(sochet);
+                        while (hasNextRearrangement(perest))
+                        {
+                            NextArrange(arrange, perest, Factorial(alfSize - arrange.Count));
+                            bool t = true;
+
+                            for (int i = 0; i < arrange.Count - 1; i++)
+                                if (alf.IndexOf(arrange[i]) > alf.IndexOf(arrange[i + 1]))
+                                    t = false;
+                            if (t == true)
+                            {
+                                int ind = 0, simbNum = 1;
+                                for (int i = 0; i < sochWord.Count; i++)
+                                {
+                                    if (simbNum <= sochet[ind])
+                                    {
+                                        sochWord[i] = arrange[ind];
+                                        simbNum++;
+                                    }
+                                    else
+                                    {
+                                        simbNum = 1;
+                                        ind++;
+                                        sochWord[i] = arrange[ind];
+                                    }
+
+                                }
+                                Print(sochWord, fileSochetRep);
+                            }
+
+                        }
+                    }
+
+                }
+            }
+
+            fileSochetRep.Close();
+            Console.ReadKey();
         }
     }
 }
